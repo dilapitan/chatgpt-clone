@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-const GOOGLE_GEMINI_API_KEY = process.env.GOOGLE_GEMINI_API_KEY
+const GOOGLE_GEMINI_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_GEMINI_API_KEY
 
 const TRAINING_PROMPT = [
   {
