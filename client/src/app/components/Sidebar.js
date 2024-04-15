@@ -1,10 +1,4 @@
-'use client'
-
-import { useState } from 'react'
-
-const Sidebar = () => {
-  const [open, setOpen] = useState(true)
-
+const Sidebar = ({ open, setOpen }) => {
   return (
     <div className="p-5">
       <div className="text-right">
@@ -93,6 +87,61 @@ const Sidebar = () => {
           )}
         </button>
       </div>
+
+      {open && (
+        <div className="mt-5 h-[500px] sm:h-[700px] md:h-[900px] lg:h-[500px] bg-blue-200 overflow-auto">
+          <ul>
+            <li>Hello</li>
+            {/* <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li> */}
+          </ul>
+        </div>
+      )}
     </div>
   )
 }

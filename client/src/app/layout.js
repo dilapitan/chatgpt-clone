@@ -1,27 +1,51 @@
-import { Inter } from 'next/font/google'
+'use client'
+
 import './globals.css'
+
+import { useState } from 'react'
+import { AppWrapper } from './context'
 
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
-
-const inter = Inter({ subsets: ['latin'] })
-
-export const metadata = {
-  title: 'Wives GPT',
-  description: 'Wives GPT',
-}
+import ChatBox from './components/ChatBox'
 
 export default function RootLayout({ children }) {
+  const [open, setOpen] = useState(true)
+  const [prompt, setPrompt] = useState('')
+
   return (
     <html lang="en">
-      <body className={inter.className}>
-        {/* <Navbar /> */}
-        <div className="flex w-screen h-screen">
-          <div className="w-[20%] overflow-hidden">
-            <Sidebar />
+      <body>
+        <AppWrapper>
+          <div className="flex w-screen h-screen">
+            <div
+              className={`${
+                open ? 'w-[90%] sm:w-[40%] lg:w-[30%] xl:w-[20%]' : 'w-20'
+              }   bg-[#F9F9F9] duration-300 overflow-hidden`}
+            >
+              <Sidebar open={open} setOpen={setOpen} />
+            </div>
+            <div
+              className={`${
+                open
+                  ? 'hidden sm:flex sm:flex-col sm:w-full md:w-2/3'
+                  : 'w-[80%] overflow-hidden'
+              } p-6`}
+            >
+              <div>
+                <Navbar />
+              </div>
+              <div>{children}</div>
+              <div
+                className={`${
+                  open ? 'w-[75%]' : 'w-[70%] md:w-[80%] lg:w-[90%]'
+                } flex justify-center fixed bottom-5`}
+              >
+                <ChatBox prompt={prompt} setPrompt={setPrompt} />
+              </div>
+            </div>
           </div>
-          <div className="w-[80%] overflow-hidden">{children}</div>
-        </div>
+        </AppWrapper>
       </body>
     </html>
   )
