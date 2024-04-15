@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 import { useAppContext } from '../context'
 
 import { v4 as uuidv4 } from 'uuid'
@@ -11,6 +11,8 @@ import chatToGoogleGemini from '../services/GoogleGeminiServices'
 const ChatBox = ({ prompt, setPrompt }) => {
   const textAreaRef = useRef()
   const router = useRouter()
+  const { chatID } = useParams()
+
   const { isLoggedIn, allPrompts, setAllPrompts } = useAppContext()
   const [isSending, setIsSending] = useState(false)
 
@@ -44,9 +46,24 @@ const ChatBox = ({ prompt, setPrompt }) => {
 
   const getResultsFromGoogleGemini = async () => {
     setIsSending(true)
-    const responseMessage = await chatToGoogleGemini(allPrompts, prompt)
-    const newAllPrompts = [
-      ...allPrompts,
+
+    console.log('allPrompts:', allPrompts)
+    const currentChat = allPrompts.find((prompt) => prompt._chatID === chatID)
+    console.log('currentChat:', currentChat)
+
+    const chat = {
+      _chatID: currentChat ? currentChat._chatID : uuidv4(),
+      chatPrompt: prompt, // TODO: what prompt to use?
+      chatAllPrompt: currentChat ? currentChat.chatAllPrompt : [],
+      user_id: 1,
+      timestamp: currentChat ? currentChat.timestamp : new Date(),
+    }
+    // console.log('chat:', chat)
+
+    // allPrompts is of a single Chat Thread
+    const responseMessage = await chatToGoogleGemini(chat.chatAllPrompt, prompt)
+    const newChatAllPrompts = [
+      ...chat.chatAllPrompt,
       {
         role: 'user',
         parts: [
@@ -66,11 +83,36 @@ const ChatBox = ({ prompt, setPrompt }) => {
     ]
 
     // One Chat Thread
+    // Old: setAllPrompts(newAllPrompts)
+
+    // Update newly created Chat Object with the 'newAllPrompts'
+
+    chat['chatAllPrompt'] = newChatAllPrompts
+    console.log(`updated chat for ${prompt}:`, chat)
+
+    // console.log('allPrompts:', allPrompts)
+    const newAllPrompts = [...allPrompts]
+    console.log('before newAllPrompts:', newAllPrompts)
+    if (chatID === undefined) {
+      newAllPrompts.push(chat)
+    } else {
+      newAllPrompts.forEach((item) => {
+        if (item._chatID === chat._chatID) {
+          item['chatAllPrompt'] = chat['chatAllPrompt']
+          return
+        }
+      })
+    }
+    console.log('after newAllPrompts:', newAllPrompts)
     setAllPrompts(newAllPrompts)
+    // console.log('newAllPrompts:', newAllPrompts)
+
+    // Then pushed it to the global array of Chat Threads under the logged in user
+
     setIsSending(false)
 
     if (isLoggedIn) {
-      router.push('/1')
+      router.push(`/${chat._chatID}`)
     }
   }
 
