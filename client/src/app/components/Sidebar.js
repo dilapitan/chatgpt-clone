@@ -1,6 +1,12 @@
+'use client'
+
+import Link from 'next/link'
+import UserLogo from '../components/UserLogo'
 import WivesGPTLogo from '../components/WivesGPTLogo'
+import { useAppContext } from '../context'
 
 const Sidebar = ({ open, setOpen }) => {
+  const { isLoggedIn, setIsLoggedIn } = useAppContext()
   return (
     <div className="p-5">
       <div className="text-right">
@@ -38,28 +44,30 @@ const Sidebar = ({ open, setOpen }) => {
       <div>
         <button className="w-full bg-blue-500 rounded-md p-2 font-bold text-white">
           {open ? (
-            <div className="flex items-center">
-              <WivesGPTLogo color={'text-white'} />
+            <Link href="/">
+              <div className="flex items-center">
+                <WivesGPTLogo color={'text-white'} />
 
-              <span className="ml-2 text-lg md:text-sm mr-36 md:mr-28">
-                New Chat
-              </span>
+                <span className="ml-2 text-lg md:text-sm mr-36 md:mr-28">
+                  New Chat
+                </span>
 
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-5 h-5 md:w-4 md:h-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-                />
-              </svg>
-            </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-5 h-5 md:w-4 md:h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+                  />
+                </svg>
+              </div>
+            </Link>
           ) : (
             <div className="flex justify-center">
               <svg
@@ -133,6 +141,23 @@ const Sidebar = ({ open, setOpen }) => {
             <li>Hello</li>
             <li>Hello</li> */}
           </ul>
+        </div>
+      )}
+
+      {open && (
+        <div className="flex flex-col space-y-5 items-center justify-center w-full mt-5">
+          {isLoggedIn && (
+            <div className="flex items-center space-x-2">
+              <UserLogo />
+              <div>User</div>
+            </div>
+          )}
+          <button
+            onClick={() => setIsLoggedIn(!isLoggedIn)}
+            className="w-full border-2 border-blue-500 text-blue-500 bg-white py-1 rounded-lg font-bold hover:bg-blue-500 hover:text-white"
+          >
+            {isLoggedIn ? 'Logout' : 'Login'}
+          </button>
         </div>
       )}
     </div>

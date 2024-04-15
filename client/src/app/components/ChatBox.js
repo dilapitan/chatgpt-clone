@@ -1,12 +1,17 @@
 'use client'
 
 import { useState, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import { useAppContext } from '../context'
+
+import { v4 as uuidv4 } from 'uuid'
+
 import chatToGoogleGemini from '../services/GoogleGeminiServices'
 
 const ChatBox = ({ prompt, setPrompt }) => {
   const textAreaRef = useRef()
-  const { allPrompts, setAllPrompts } = useAppContext()
+  const router = useRouter()
+  const { isLoggedIn, allPrompts, setAllPrompts } = useAppContext()
   const [isSending, setIsSending] = useState(false)
 
   const handleKeyPress = (event) => {
@@ -60,9 +65,13 @@ const ChatBox = ({ prompt, setPrompt }) => {
       },
     ]
 
-    console.log('newAllPrompts:', newAllPrompts)
+    // One Chat Thread
     setAllPrompts(newAllPrompts)
     setIsSending(false)
+
+    if (isLoggedIn) {
+      router.push('/1')
+    }
   }
 
   return (

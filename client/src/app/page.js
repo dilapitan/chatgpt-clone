@@ -7,7 +7,7 @@ import WivesGPTLogo from './components/WivesGPTLogo'
 
 export default function Home() {
   const chatListRef = useRef()
-  const { allPrompts } = useAppContext()
+  const { isLoggedIn, allPrompts } = useAppContext()
 
   useEffect(() => {
     chatListRef.current?.lastElementChild?.scrollIntoView()
@@ -16,7 +16,12 @@ export default function Home() {
   return (
     <main>
       <div className="mt-5">
-        {allPrompts.length ? (
+        {/* {isLoggedIn && (
+          <div className="flex flex-col items-center">
+            <h1 className="text-2xl">How can I help you today?</h1>
+          </div>
+        )} */}
+        {allPrompts.length && !isLoggedIn ? (
           <div
             ref={chatListRef}
             className="flex flex-col space-y-10 h-[475px] md:h-[750px] lg:h-[900px] xl:h-[475px] overflow-y-scroll w-full p-2 sm:p-10"
