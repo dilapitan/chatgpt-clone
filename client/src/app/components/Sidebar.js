@@ -1,12 +1,21 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import UserLogo from '../components/UserLogo'
 import WivesGPTLogo from '../components/WivesGPTLogo'
 import { useAppContext } from '../context'
 
 const Sidebar = ({ open, setOpen }) => {
-  const { isLoggedIn, setIsLoggedIn, allPrompts } = useAppContext()
+  const { isLoggedIn, setIsLoggedIn, allPrompts, setAllPrompts } =
+    useAppContext()
+  const router = useRouter()
+
+  const handleLogout = () => {
+    setIsLoggedIn(false)
+    setAllPrompts([])
+    router.push('/')
+  }
 
   return (
     <div className="p-5">
@@ -91,7 +100,7 @@ const Sidebar = ({ open, setOpen }) => {
       </div>
 
       {open && (
-        <div className="mt-5 h-[500px] sm:h-[700px] md:h-[900px] lg:h-[500px] overflow-auto p-2">
+        <div className="mt-5 h-[500px] sm:h-[700px] md:h-[730px] lg:h-[1000px] xl:h-[430px] overflow-auto p-2">
           <ul>
             {allPrompts.length ? (
               <div className="flex flex-col space-y-5">
@@ -113,19 +122,48 @@ const Sidebar = ({ open, setOpen }) => {
       )}
 
       {open && (
-        <div className="flex flex-col space-y-5 items-center justify-center w-full mt-5">
-          {isLoggedIn && (
-            <div className="flex items-center space-x-2">
-              <UserLogo />
-              <div>User</div>
+        <div className="flex flex-col space-y-2 items-center justify-center w-full mt-5">
+          {isLoggedIn ? (
+            <div className="w-full flex flex-col items-center space-y-2">
+              <div className="flex justify-center items-center space-x-2">
+                <UserLogo />
+                <div>User</div>
+              </div>
+
+              <button
+                onClick={handleLogout}
+                className="border-[1px] text-blue-500 border-blue-500 w-full rounded-md p-2 font-bold font-blue-500 hover:bg-blue-100"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div>
+              <div className="w-full text-left">
+                <p className="font-bold text-sm">Sign up or log in</p>
+                <p className="text-xs text-gray-700">
+                  Save your chat history, share chats, and personalize your
+                  experience.
+                </p>
+              </div>
+
+              <div className="mt-5 w-full flex flex-col space-y-2">
+                <Link
+                  href="/signup"
+                  className="w-full text-center text-sm font-bold text-white bg-blue-500 py-2 rounded-lg hover:bg-blue-600"
+                >
+                  Sign Up
+                </Link>
+
+                <Link
+                  href="/login"
+                  className="w-full text-center border-[1px] border-blue-500 text-sm font-bold text-blue-500 bg-white py-2 rounded-lg hover:bg-blue-100"
+                >
+                  {isLoggedIn ? 'Logout' : 'Log in'}
+                </Link>
+              </div>
             </div>
           )}
-          <button
-            onClick={() => setIsLoggedIn(!isLoggedIn)}
-            className="w-full border-2 border-blue-500 text-blue-500 bg-white py-1 rounded-lg font-bold hover:bg-blue-500 hover:text-white"
-          >
-            {isLoggedIn ? 'Logout' : 'Login'}
-          </button>
         </div>
       )}
     </div>

@@ -3,18 +3,29 @@
 import { useState } from 'react'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import WivesGPTLogo from '../components/WivesGPTLogo'
+import { useAppContext } from '../context'
 
 const Auth = ({ pathname }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const { setIsLoggedIn } = useAppContext()
+  const router = useRouter()
+
+  const handleAuth = () => {
+    setIsLoggedIn(true)
+    router.push('/')
+  }
 
   return (
     <div className="p-10 flex flex-col items-center">
       <div>
-        <WivesGPTLogo color="text-blue-500" />
+        <Link href="/">
+          <WivesGPTLogo color="text-blue-500" />
+        </Link>
       </div>
 
       <div className="text-black mt-20 text-2xl font-bold">
@@ -49,7 +60,10 @@ const Auth = ({ pathname }) => {
           required
         />
         <br />
-        <button className="w-full bg-blue-500 hover:bg-blue-600 font-bold text-white rounded-md p-2">
+        <button
+          className="w-full bg-blue-500 hover:bg-blue-600 font-bold text-white rounded-md p-2"
+          onClick={handleAuth}
+        >
           {pathname === '/login' ? 'Login' : 'Sign Up'}
         </button>
         <br />
