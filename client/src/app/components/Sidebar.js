@@ -6,7 +6,8 @@ import WivesGPTLogo from '../components/WivesGPTLogo'
 import { useAppContext } from '../context'
 
 const Sidebar = ({ open, setOpen }) => {
-  const { isLoggedIn, setIsLoggedIn } = useAppContext()
+  const { isLoggedIn, setIsLoggedIn, allPrompts } = useAppContext()
+
   return (
     <div className="p-5">
       <div className="text-right">
@@ -90,56 +91,23 @@ const Sidebar = ({ open, setOpen }) => {
       </div>
 
       {open && (
-        <div className="mt-5 h-[500px] sm:h-[700px] md:h-[900px] lg:h-[500px] bg-blue-200 overflow-auto">
+        <div className="mt-5 h-[500px] sm:h-[700px] md:h-[900px] lg:h-[500px] overflow-auto p-2">
           <ul>
-            <li>Hello</li>
-            {/* <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li> */}
+            {allPrompts.length ? (
+              <div className="flex flex-col space-y-5">
+                {allPrompts.map((prompt) => {
+                  return (
+                    <Link key={prompt._chatID} href={prompt._chatID}>
+                      <li className="p-2 text-sm hover:bg-gray-200 rounded-md truncate">
+                        {prompt.chatPrompt}
+                      </li>
+                    </Link>
+                  )
+                })}
+              </div>
+            ) : (
+              <div></div>
+            )}
           </ul>
         </div>
       )}
