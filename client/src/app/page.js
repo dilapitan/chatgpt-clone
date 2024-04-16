@@ -7,11 +7,11 @@ import WivesGPTLogo from './components/WivesGPTLogo'
 
 export default function Home() {
   const chatListRef = useRef()
-  const { isLoggedIn, allPrompts } = useAppContext()
+  const { isLoggedIn, allPrompts, publicAllPrompts } = useAppContext()
 
-  // useEffect(() => {
-  //   chatListRef.current?.lastElementChild?.scrollIntoView()
-  // }, [allPrompts])
+  useEffect(() => {
+    chatListRef.current?.lastElementChild?.scrollIntoView()
+  }, [publicAllPrompts])
 
   return (
     <main>
@@ -21,12 +21,12 @@ export default function Home() {
             <h1 className="text-2xl">How can I help you today?</h1>
           </div>
         )} */}
-        {/* {allPrompts.length && !isLoggedIn ? (
+        {publicAllPrompts.length && !isLoggedIn ? (
           <div
             ref={chatListRef}
             className="flex flex-col space-y-10 h-[475px] md:h-[750px] lg:h-[900px] xl:h-[475px] overflow-y-scroll w-full p-2 sm:p-10"
           >
-            {allPrompts.map((prompt, index) => {
+            {publicAllPrompts.map((prompt, index) => {
               return (
                 <div key={index} className="flex space-x-2">
                   <div>
@@ -67,7 +67,7 @@ export default function Home() {
           <div className="flex flex-col items-center">
             <h1 className="text-2xl">How can I help you today?</h1>
           </div>
-        )} */}
+        )}
       </div>
     </main>
   )

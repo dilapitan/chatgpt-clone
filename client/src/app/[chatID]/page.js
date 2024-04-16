@@ -11,10 +11,8 @@ const ChatPage = () => {
   const chatListRef = useRef()
   const { chatID } = useParams()
   const { allPrompts } = useAppContext()
-  console.log('allPrompts:', allPrompts)
 
   const currentChat = allPrompts.find((prompt) => prompt._chatID === chatID)
-  console.log('currentChat in ChatID:', currentChat)
 
   useEffect(() => {
     chatListRef.current?.lastElementChild?.scrollIntoView()

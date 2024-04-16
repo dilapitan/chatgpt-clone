@@ -4,6 +4,7 @@ const AppContext = createContext()
 
 export function AppWrapper({ children }) {
   const [allPrompts, setAllPrompts] = useState([])
+  const [publicAllPrompts, setPublicAllPrompts] = useState([])
   const [isLoggedIn, setIsLoggedIn] = useState(true)
 
   return (
@@ -13,6 +14,8 @@ export function AppWrapper({ children }) {
         setAllPrompts,
         isLoggedIn,
         setIsLoggedIn,
+        publicAllPrompts,
+        setPublicAllPrompts,
       }}
     >
       {children}
