@@ -111,7 +111,7 @@ const ChatBox = ({ prompt, setPrompt }) => {
 
     setIsSending(false)
 
-    if (isLoggedIn) {
+    if (isLoggedIn && chatID === undefined) {
       router.push(`/${chat._chatID}`)
     }
   }
