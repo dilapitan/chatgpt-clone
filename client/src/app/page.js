@@ -7,7 +7,7 @@ import WivesGPTLogo from './components/WivesGPTLogo'
 
 export default function Home() {
   const chatListRef = useRef()
-  const { isLoggedIn, allPrompts, publicAllPrompts } = useAppContext()
+  const { isLoggedIn, publicAllPrompts } = useAppContext()
 
   useEffect(() => {
     chatListRef.current?.lastElementChild?.scrollIntoView()
