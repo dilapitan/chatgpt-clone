@@ -9,7 +9,7 @@ import { useAppContext } from '../context'
 const Sidebar = ({ open, setOpen }) => {
   const { isLoggedIn, allPrompts, setAllPrompts } = useAppContext()
   const router = useRouter()
-  const user = localStorage.getItem('user')
+  const user = JSON.parse(localStorage.getItem('user'))
 
   const handleLogout = () => {
     setAllPrompts([])
@@ -127,7 +127,7 @@ const Sidebar = ({ open, setOpen }) => {
             <div className="w-full flex flex-col items-center space-y-2">
               <div className="flex justify-center items-center space-x-2">
                 <UserLogo />
-                <div className="truncate">{user}</div>
+                <div className="truncate">{user.email}</div>
               </div>
 
               <button

@@ -29,7 +29,14 @@ const Auth = ({ pathname }) => {
     const response = await login({ email, password })
 
     if (response.data) {
-      localStorage.setItem('user', response.data.user.email)
+      console.log('response.data:', response.data)
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          email: response.data.user.email,
+          userID: response.data.user.id,
+        }),
+      )
       router.push('/')
     } else {
       setError(response.message)
@@ -40,7 +47,13 @@ const Auth = ({ pathname }) => {
     const response = await signup({ email, password })
 
     if (response.data) {
-      localStorage.setItem('user', response.data.user.email)
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          email: response.data.user.email,
+          userID: response.data.user.id,
+        }),
+      )
       router.push('/')
     } else {
       setError(response.message)

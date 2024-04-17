@@ -12,6 +12,7 @@ const ChatBox = ({ prompt, setPrompt }) => {
   const textAreaRef = useRef()
   const router = useRouter()
   const { chatID } = useParams()
+  const user = JSON.parse(localStorage.getItem('user'))
 
   const {
     isLoggedIn,
@@ -58,9 +59,9 @@ const ChatBox = ({ prompt, setPrompt }) => {
 
       const chat = {
         _chatID: currentChat ? currentChat._chatID : uuidv4(),
-        chatPrompt: prompt, // TODO: what prompt to use?
+        chatPrompt: prompt,
         chatAllPrompt: currentChat ? currentChat.chatAllPrompt : [],
-        user_id: 1,
+        user_id: user.userID,
         timestamp: currentChat ? currentChat.timestamp : new Date(),
       }
 
