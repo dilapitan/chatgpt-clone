@@ -13,6 +13,7 @@ module.exports = (app) => {
 
   // Auth
   app.post('/signup', AuthController.signUp)
+  app.post('/login', AuthController.login)
 
   // User
   app.get('/users', UserController.getUsers)
