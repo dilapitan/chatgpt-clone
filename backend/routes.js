@@ -1,4 +1,5 @@
 const AuthController = require('./controllers/AuthController')
+const ChatController = require('./controllers/ChatController')
 const UserController = require('./controllers/UserController')
 
 module.exports = (app) => {
@@ -21,4 +22,12 @@ module.exports = (app) => {
   app.post('/users', UserController.createUser)
   app.put('/users/:id', UserController.editUser)
   app.delete('/users/:id', UserController.deleteUser)
+
+  // Chat
+  app.get('/chats', ChatController.getChats)
+  app.get('/chats/:id', ChatController.getChatsByUser)
+  app.post('/chats', ChatController.createChat)
+  app.get('/chats/:id', ChatController.getChat)
+  app.put('/chats/:id', ChatController.editChat)
+  app.delete('/chats/:id', ChatController.deleteChat)
 }

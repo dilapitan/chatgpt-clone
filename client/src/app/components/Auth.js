@@ -29,7 +29,6 @@ const Auth = ({ pathname }) => {
     const response = await login({ email, password })
 
     if (response.data) {
-      console.log('response.data:', response.data)
       localStorage.setItem(
         'user',
         JSON.stringify({

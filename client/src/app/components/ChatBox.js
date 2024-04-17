@@ -62,7 +62,6 @@ const ChatBox = ({ prompt, setPrompt }) => {
         chatPrompt: prompt,
         chatAllPrompt: currentChat ? currentChat.chatAllPrompt : [],
         user_id: user.userID,
-        timestamp: currentChat ? currentChat.timestamp : new Date(),
       }
 
       // allPrompts is of a single Chat Thread
@@ -109,6 +108,7 @@ const ChatBox = ({ prompt, setPrompt }) => {
         })
       }
 
+      // ChatService for storing `newAllPrompts` to DB
       setAllPrompts(newAllPrompts)
 
       // Then pushed it to the global array of Chat Threads under the logged in user
