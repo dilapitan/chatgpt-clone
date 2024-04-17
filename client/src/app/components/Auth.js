@@ -6,18 +6,32 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 import WivesGPTLogo from '../components/WivesGPTLogo'
-import { useAppContext } from '../context'
+
+import { login } from '../services/AuthService'
 
 const Auth = ({ pathname }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const { setIsLoggedIn } = useAppContext()
+  const [error, setError] = useState('')
+
   const router = useRouter()
 
   const handleAuth = () => {
-    setIsLoggedIn(true)
-    router.push('/')
+    if (pathname === '/login') {
+      handleLogin()
+    }
+  }
+
+  const handleLogin = async () => {
+    const response = await login({ email, password })
+
+    if (response.data) {
+      localStorage.setItem('user', response.data.user.email)
+      router.push('/')
+    } else {
+      setError(response.message)
+    }
   }
 
   return (
@@ -60,6 +74,8 @@ const Auth = ({ pathname }) => {
           required
         />
         <br />
+
+        {error && <p className="text-red-500 font-bold">{error}</p>}
         <button
           className="w-full bg-blue-500 hover:bg-blue-600 font-bold text-white rounded-md p-2"
           onClick={handleAuth}

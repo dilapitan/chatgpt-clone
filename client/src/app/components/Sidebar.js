@@ -7,13 +7,13 @@ import WivesGPTLogo from '../components/WivesGPTLogo'
 import { useAppContext } from '../context'
 
 const Sidebar = ({ open, setOpen }) => {
-  const { isLoggedIn, setIsLoggedIn, allPrompts, setAllPrompts } =
-    useAppContext()
+  const { isLoggedIn, allPrompts, setAllPrompts } = useAppContext()
   const router = useRouter()
+  const user = localStorage.getItem('user')
 
   const handleLogout = () => {
-    setIsLoggedIn(false)
     setAllPrompts([])
+    localStorage.removeItem('user')
     router.push('/')
   }
 
@@ -127,7 +127,7 @@ const Sidebar = ({ open, setOpen }) => {
             <div className="w-full flex flex-col items-center space-y-2">
               <div className="flex justify-center items-center space-x-2">
                 <UserLogo />
-                <div>User</div>
+                <div className="truncate">{user}</div>
               </div>
 
               <button

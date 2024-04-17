@@ -16,11 +16,6 @@ export default function Home() {
   return (
     <main>
       <div className="mt-5">
-        {/* {isLoggedIn && (
-          <div className="flex flex-col items-center">
-            <h1 className="text-2xl">How can I help you today?</h1>
-          </div>
-        )} */}
         {publicAllPrompts.length && !isLoggedIn ? (
           <div
             ref={chatListRef}

@@ -57,6 +57,7 @@ module.exports = {
 
       if (!bcrypt.compareSync(password, user.password)) {
         res.status(400).send({ message: 'Incorrect Password' })
+        return
       }
 
       const token = jwt.sign(

@@ -5,7 +5,7 @@ const AppContext = createContext()
 export function AppWrapper({ children }) {
   const [allPrompts, setAllPrompts] = useState([])
   const [publicAllPrompts, setPublicAllPrompts] = useState([])
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const isLoggedIn = Boolean(localStorage.getItem('user'))
 
   return (
     <AppContext.Provider
@@ -13,7 +13,6 @@ export function AppWrapper({ children }) {
         allPrompts,
         setAllPrompts,
         isLoggedIn,
-        setIsLoggedIn,
         publicAllPrompts,
         setPublicAllPrompts,
       }}
