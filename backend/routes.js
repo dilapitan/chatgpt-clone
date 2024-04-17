@@ -12,7 +12,7 @@ module.exports = (app) => {
   })
 
   // Auth
-  app.get('/signup', AuthController.signUp)
+  app.post('/signup', AuthController.signUp)
 
   // User
   app.get('/users', UserController.getUsers)
