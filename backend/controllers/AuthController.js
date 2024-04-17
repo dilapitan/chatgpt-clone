@@ -32,7 +32,11 @@ module.exports = {
 
       res
         .status(200)
-        .send({ success: true, message: 'Successful User Sign Up', data: user })
+        .send({
+          success: true,
+          message: 'Successful User Sign Up',
+          data: { user },
+        })
     } catch (error) {
       res.status(500).send({ message: error.message })
     }

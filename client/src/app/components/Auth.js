@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 
 import WivesGPTLogo from '../components/WivesGPTLogo'
 
-import { login } from '../services/AuthService'
+import { login, signup } from '../services/AuthService'
 
 const Auth = ({ pathname }) => {
   const [email, setEmail] = useState('')
@@ -20,11 +20,24 @@ const Auth = ({ pathname }) => {
   const handleAuth = () => {
     if (pathname === '/login') {
       handleLogin()
+    } else {
+      handleSignup()
     }
   }
 
   const handleLogin = async () => {
     const response = await login({ email, password })
+
+    if (response.data) {
+      localStorage.setItem('user', response.data.user.email)
+      router.push('/')
+    } else {
+      setError(response.message)
+    }
+  }
+
+  const handleSignup = async () => {
+    const response = await signup({ email, password })
 
     if (response.data) {
       localStorage.setItem('user', response.data.user.email)
